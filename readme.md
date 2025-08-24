@@ -6,7 +6,7 @@ This repository contains a CV (plus cover letter) template composed in LaTeX. It
 
 Beyond its practical necessity, the creation of this template served chiefly the author as an opportunity to renew his acquaintance with writing LaTeX packages and classes—remaining true to his office suite software aversion.[^not-perfect]
 
-[^not-perfect] Nevertheless—and this may appear heretical (have mercy upon me!)—LaTeX is *not* the perfect instrument for the composition of CVs.
+[^not-perfect]: Nevertheless—and this may appear heretical (have mercy upon me!)—LaTeX is *not* the perfect instrument for the composition of CVs.
 
 ### Nomen est … nomen
 

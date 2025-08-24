@@ -22,7 +22,7 @@ help: ## Shows this help
 cp: ## Copies package into TEXMF
 	@mkdir -p $(TARGET)
 	@for package in $(PACKAGES); do \
-		echo cp -r "$$(realpath src/$$package)" "$(TARGET)/"; \
+		cp -r "$$(realpath src/$$package)" "$(TARGET)/"; \
 	done
 # 	Not strictly necessary; however, it does not harm.
 	@texhash "$(TEXMF)"
@@ -30,14 +30,14 @@ cp: ## Copies package into TEXMF
 ln: ## Symlinks package into TEXMF
 	@mkdir -p $(TARGET)
 	@for package in $(PACKAGES); do \
-		echo ln -sf "$$(realpath src/$$package)" "$(TARGET)/"; \
+		ln -sf "$$(realpath src/$$package)" "$(TARGET)/"; \
 	done
 # 	Not strictly necessary; however, it does not harm.
 	texhash "$(TEXMF)"
 
 rm: ## Removes package from TEXMF
 	@for package in $(PACKAGES); do \
-		echo rm -r "$(TARGET)/$$(basename $$package)"; \
+		rm -r "$(TARGET)/$$(basename $$package)"; \
 	done
 # 	Not strictly necessary; however, it does not harm.
 	texhash $(TEXMF)
