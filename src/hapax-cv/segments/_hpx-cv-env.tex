@@ -1,0 +1,38 @@
+% ---
+% description: CV-related Environments
+% ---
+
+% ---
+
+\NewDocumentCommand{\hpxPortrait}{}{
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[
+            anchor=east,
+            align=right,
+            inner sep=0pt,
+            % ENIGMA: Why does this seemingly unrelated option
+            % ensure correct alignemt of the graphic with the text body?
+            text width=0.25\textwidth,
+        ] at ([yshift=-1.75cm]current page text area.north east|-current page.north east)
+        { \includegraphics[width=3cm, height=3cm]{example-image-duck} };
+    \end{tikzpicture}
+}
+
+\ExplSyntaxOn
+\NewDocumentEnvironment{hpxcv}{}
+{
+    \clearpage
+    \clearpairofpagestyles
+    \newgeometry{
+        top={\tl_use:N \g__hpxds_topmargin_tl},
+        bottom={\tl_use:N \g__hpxds_bottommargin_tl},
+        left={\tl_use:N \g__hpxds_sidemargincv_tl},
+        right={\tl_use:N \g__hpxds_sidemargincv_tl},
+    }
+    \pagestyle{hpxdefault}
+    \pdfbookmark[0]{CV}{cv}
+    % \vspace*{1cm}
+}{
+    \newpage
+}
+\ExplSyntaxOff

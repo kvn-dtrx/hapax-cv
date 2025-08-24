@@ -1,0 +1,126 @@
+% ---
+% description:
+% ---
+
+% ---
+
+% Top segment
+
+% ---
+
+% Profile
+
+\KOMAoptions{parskip=half-}
+
+% Profile
+\NewDocumentEnvironment{hpxprofile}{m}{
+    \begin{minipage}[t]{0.775\textwidth}
+        {\LARGE\bfseries\scshape #1}\\[0.5ex]
+        }{
+    \end{minipage}%
+}
+
+% ---
+
+% Photo
+\NewDocumentCommand{\hpxphoto}{m}{
+    % Define the width of the image
+    \def\imgwidth{0.15\textwidth}
+    % \begin{minipage}[t]{0.175\textwidth}
+    %     \includegraphics[width=\imgwidth]{#1}
+    % \end{minipage}%
+    \begin{tikzpicture}[overlay, remember picture]
+        \node[
+            anchor=north east,
+            inner sep=0pt,
+        ] at (current page text area.north east)
+        {
+            \includegraphics[width=\imgwidth]{#1}
+        };
+    \end{tikzpicture}
+}
+
+% ---
+
+% Main column
+\NewDocumentEnvironment{hpxmaincol}{}{
+    \begin{minipage}[t]{0.725\textwidth}
+        \raggedright
+        }{
+    \end{minipage}%
+    \hfill%
+}
+
+% History
+
+\NewDocumentEnvironment{hpxmaincolsection}{m}{
+    {\LARGE\bfseries\scshape #1}\\[2ex]
+}{
+    \vspace{2ex}
+}
+
+\ExplSyntaxOn
+
+\keys_define:nn{dateentry}{
+    from   .tl_set:N = \l__dateentry_from_tl,
+    from   .initial:n = {},
+
+    to     .tl_set:N = \l__dateentry_to_tl,
+    to     .initial:n = {},
+
+    title  .tl_set:N = \l__dateentry_title_tl,
+    title  .initial:n = {},
+
+    institution  .tl_set:N = \l__dateentry_institution_tl,
+    institution  .initial:n = {},
+}
+
+% tabularx – Tabulars with adjustable-width columns.
+\usepackage{tabularx}
+
+\NewDocumentEnvironment{dateentry}{O{} +b}{
+    \group_begin:
+    \keys_set:nn{dateentry}{#1}
+    % layout
+    \noindent
+    \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}m{1.5cm}X@{}}
+        % Dates
+        \begin{tabular}[t]{@{}c@{}}
+            \tl_use:N \l__dateentry_from_tl \cs_if_eq:NNF \l__dateentry_to_tl \c_empty_tl
+            { \\[-0.2ex]
+            • \\[-0.2ex]
+                \tl_use:N \l__dateentry_to_tl}
+        \end{tabular}
+         &
+        % Title + Institution + Description
+        \begin{minipage}[t]{\linewidth}
+            \raggedright
+            \small
+            \textbf{\tl_use:N \l__dateentry_title_tl}\cs_if_eq:NNF \l__dateentry_institution_tl \c_empty_tl
+            {~•~\emph{\tl_use:N \l__dateentry_institution_tl}}\\[1ex]
+            {\leftskip=2em \tl_use:N #2 \par}
+        \end{minipage}
+    \end{tabularx}
+    \par\vspace{0.6em}\par
+}
+\group_end:
+{}
+
+\ExplSyntaxOff
+
+% ---
+
+% Side Column
+
+\NewDocumentEnvironment{sideentry}{m +b}{
+    {\LARGE\bfseries\scshape #1}\\[0.75ex]
+    #2
+    \par\vspace{3ex}\par
+}{}
+
+\NewDocumentEnvironment{hpxsidecol}{}{
+    \begin{minipage}[t]{0.225\textwidth}
+        \raggedright
+        }{
+    \end{minipage}%
+}

@@ -1,0 +1,23 @@
+% ---
+% description: Cover Letter
+% ---
+
+% ---
+
+% Inserts a TikZ image as signature.
+\input{segments/signature.tex}
+\setkomavar{signature}{\MakeSignature[blue]{4ex}{!}}
+
+\setkomavar{subject}{\hpxdiSubject}
+
+\begin{hpxlttr}[To Numerius Negidius, Search Committee, Noumenal University]
+    \opening{Esteemed Numerius Negidius,}
+
+    \kant[1-2]
+
+    \closing{The starry heavens above me and the moral law within me,}
+
+    \ps{\textbf{P.\,S.}: \kant[42][1]}
+
+    \encl{CV, PhD Certificate}
+\end{hpxlttr}

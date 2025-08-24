@@ -1,0 +1,141 @@
+% ---
+% description: Pagestyles
+% ---
+
+% ---
+
+% NOTE Nesting TikZ environments in into Expl environments
+% is generally disrecommended.
+
+% % Only for debugging purposes.
+% \begin{tikzpicture}[remember picture, overlay]
+%     \draw[red, thick]
+%     (current page text area.north west) rectangle
+%     (current page text area.south east);
+% \end{tikzpicture}
+
+\NewDocumentCommand {\hpx@applicant@role} {} {
+{\fontsize{40pt}{48pt}\selectfont\scshape\hpxdiApplicant{}}\\[2ex]
+{\fontsize{20pt}{24pt}\selectfont\scshape\hpxdiRole{}}
+}
+
+\newlength{\iconsep}
+\setlength{\iconsep}{1.0em}
+
+\NewDocumentCommand{\hpx@contact} {} {
+    \begin{center}
+        \small
+        \begin{minipage}{0.33\hpxdsTextwidth}\centering
+            \faMapMarker\hspace{\iconsep}\href{\hpxdiLocationref}{\hpxdiLocation}\par
+            \vspace{0.5em}
+            \faEnvelope\hspace{\iconsep}\href{mailto:\hpxdiMail}{\hpxdiMail}
+        \end{minipage}%
+        \hfill
+        \begin{minipage}{0.33\hpxdsTextwidth}\centering
+            \faLinkedin\hspace{\iconsep}\href{https://www.linkedin.com/in/\hpxdiLinkedin}{\hpxdiLinkedin}\par
+            \vspace{0.5em}
+            \faGithub\hspace{\iconsep}\href{https://www.github.com/\hpxdiGithub}{\hpxdiGithub}
+        \end{minipage}%
+        \hfill
+        \begin{minipage}{0.33\hpxdsTextwidth}\centering
+            \faPhone\hspace{\iconsep}\hpxTelRef{\hpxdiPhone}\par
+            \vspace{0.5em}
+            \faKey\hspace{\iconsep}\href{\hpxdiPgpref}{\hpxdiPgp}
+        \end{minipage}%
+    \end{center}
+}
+
+\NewDocumentCommand{\hpxHeaderContent} {} {
+    \hpx@applicant@role{}\\[2ex]
+    \hpx@contact{}
+}
+
+\NewDocumentCommand{\hpx@header}{}{
+    \begin{tikzpicture}[remember picture, overlay]
+        % Coordinates
+        \coordinate (layer_southwest) at ([yshift={\hpxdsYshiftathead}]current page text area.north west-|current page.north west);
+        \coordinate (layer_southeast) at ([yshift={\hpxdsYshiftathead}]current page text area.north east-|current page.north east);
+        \coordinate (layer_south) at ($(layer_southwest)!0.5!(layer_southeast)$);
+        \coordinate (layer_center) at ($(current page.north)!0.5!(layer_south)$);
+
+        % Full-width Rectangle
+        \fill[
+            color=layerbgcolor,
+        ] (current page.north west)
+        rectangle (layer_southeast);
+
+        % Header Text
+        \node[
+            anchor=center,
+            text=layerfgcolor,
+            align=center,
+            inner sep=0pt,
+            text width={\hpxdsTextwidth},
+        ] at (layer_center)
+        {\hpxHeaderContent{}};
+    \end{tikzpicture}
+}
+
+\NewDocumentCommand{\hpxFooterContent}{}{
+    {\normalfont\hpxdiAtdate{}}%
+    \hfill%
+    {\scriptsize \href{https://github.com/kvn-dtrx/hapax-cv}{ἅπαξ-cv}}%
+    \hfill%
+    {\normalfont\hpxdiAtlocation{}}%
+}
+
+\NewDocumentCommand{\hpx@footer}{}{
+    \begin{tikzpicture}[remember picture, overlay]
+        % Coordinates
+        \coordinate (layer_northwest) at ([yshift={\hpxdsYshiftatfoot}]current page text area.south west-|current page.south west);
+        \coordinate (layer_northeast) at ([yshift={\hpxdsYshiftatfoot}]current page text area.south east-|current page.south east);
+        \coordinate (layer_north) at ($(layer_northwest)!0.5!(layer_northeast)$);
+        \coordinate (layer_center) at ($(layer_north)!0.5!(current page.south)$);
+
+        % Full-width Rectangle
+        \fill[
+            color=layerbgcolor,
+        ] (current page.south west)
+        rectangle (layer_northeast);
+
+        % Footer Text
+        \node[
+            anchor=center,
+            text=layerfgcolor,
+            align=center,
+            inner sep=0pt,
+            text width={\hpxdsTextwidth},
+        ]
+        at (layer_center)
+        { \hpxFooterContent{} };
+    \end{tikzpicture}%
+}
+
+\DeclareNewLayer[
+    background,
+    contents={\hpx@header},
+]{hpx.header}
+
+\DeclareNewLayer[
+    background,
+    contents={\hpx@footer},
+]{hpx.footer}
+
+\DeclarePageStyleByLayers{hpxdefault}{%
+    hpx.header,%
+    hpx.footer,%
+}
+
+\ExplSyntaxOn
+% Margin values specified by are set by the user in the preamble.
+% NOTE These are the specifications for the cover letter;
+% For the actual CV, one may want to reduce the side margins.
+\geometry{
+    a4paper,
+    top={\tl_use:N \g__hpxds_topmargin_tl},
+    bottom={\tl_use:N \g__hpxds_bottommargin_tl},
+    left={\tl_use:N \g__hpxds_sidemargin_tl},
+    right={\tl_use:N \g__hpxds_sidemargin_tl},
+}
+\ExplSyntaxOff
+

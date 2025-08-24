@@ -1,0 +1,166 @@
+% --
+% description: Package Loading with Options
+% ---
+
+% ---
+
+% Loads skeleton with options.
+\LoadClass[%
+    parskip={half},%
+    fontsize={11pt},%
+    % visualise,%
+]{scrartcl}
+
+% scrletter – Letter extension to KOMA-Script classes.
+\RequirePackage{scrletter}
+
+% scrlayer-scrpage – Define and manage page styles.
+\RequirePackage{scrlayer-scrpage}
+
+% geometry – Flexible and complete interface to document dimensions.
+\RequirePackage{geometry}
+
+% fontspec – Advanced font selection in XeLaTeX and LuaLaTeX.
+\RequirePackage{fontspec}
+
+% Font features.
+\defaultfontfeatures{
+    % Enables classic TeX-style ligatures:
+    % - `fi', `fl' etc. with ligature.
+    % - `...` to …, `--` to `–` etc.
+    Ligatures=TeX,%
+    % Use old-style (text) digits with varying heights.
+    Numbers=OldStyle,%
+    % NOTE: Does not work for Libertinus
+    % % Enables contextual alternate glyphs such
+    % % as the trailing sigma in Ancient Greek.
+    % Contextuals=All,%
+}
+
+% Sets default fonts.
+\setmainfont{Libertinus Serif}
+\setsansfont{Libertinus Sans}
+\setmonofont{Libertinus Mono}
+
+% Select sans serif font as default.
+\renewcommand*{\familydefault}{\sfdefault}
+
+% microtype – Subliminal refinements towards typographical perfection.
+\RequirePackage{microtype}
+
+\microtypesetup{
+    protrusion=true,%
+    expansion=true,%
+    tracking=true,%
+    % kerning=true,%
+    final,%
+    % Enable features without backward-compatibility restrictions
+    activate={%
+            true,%
+            nocompatibility,%
+        },% 
+}
+
+% % polyglossia – An alternative to babel for XeLaTeX and LuaLaTeX.
+% \RequirePackage{polyglossia}
+
+% graphicx – Enhanced support for graphics.
+\RequirePackage{graphicx}
+
+% xcolor – Driver-independent color extensions for LaTeX and pdfLaTeX.
+\RequirePackage{xcolor}
+
+\ExplSyntaxOn
+\AtBeginDocument{%
+    \colorlet{layerbgcolor}{\g__hpxds_layerbgcolor_tl}
+    \colorlet{layerfgcolor}{\g__hpxds_layerfgcolor_tl}
+    \colorlet{linkcolor}{\g__hpxds_linkcolor_tl}
+}
+\ExplSyntaxOff
+
+% tikz - Create PDF graphics in TeX.
+\RequirePackage{tikz}
+
+% Coordinate calculations.
+\usetikzlibrary{calc}
+
+% tikzpagenodes - A single TikZ node for the whole page.
+\RequirePackage{tikzpagenodes}
+
+% pdfpages – Include PDF documents in LaTeX.
+\RequirePackage{pdfpages}
+
+% hyperref – Extensive support for hypertext in LaTeX.
+\RequirePackage{hyperref}
+
+% fontawesome5 – Font Awesome 5 with LaTeX support.
+\RequirePackage{fontawesome5}
+
+\ExplSyntaxOn
+
+\AtBeginDocument{%
+    \hypersetup{
+        linktoc={all},%
+        colorlinks={true},%
+        linkcolor={linkcolor},%
+        citecolor={linkcolor},%
+        urlcolor={linkcolor},%
+        % anchorcolor={linkcolor},%
+        pdfstartview={Fit},%
+        % Whether to display the toolbar in Acrobat Reader.
+        pdftoolbar={false},
+        % Whether to display the menubar in Acrobat Reader.
+        pdfmenubar={true},
+        pdfpagemode={UseOutlines},%
+        pdfproducer={LuaLaTeX},%
+        % pdfcreator={LuaLaTeX},%
+        pdfpagelayout={OneColumn},%
+        % pageanchor={false},%
+        % Whether to number bookmarks.
+        bookmarksnumbered={false},
+        bookmarksopen={true},%
+    }
+}
+
+\AtBeginDocument{
+    \hypersetup
+    {
+        pdfinfo =
+            {
+                Title = {\tl_use:N \g__hpxdi_title_tl},%
+                Author = {\tl_use:N \g__hpxdi_applicant_tl},%
+                Subject = {\tl_use:N \g__hpxdi_subject_tl},%
+                Keywords = {\tl_use:N \g__hpxdi_keywords_tl},%
+                % CreationDate = { \tl_use:N \l__hpx_creation_date_tl },%
+                % % CreationDate = {D:1970010112000},%
+                % ModDate = { \tl_use:N \l__hpx_mod_date_tl },%
+                % % ModDate = {D:1970010112000},%
+            }
+    }
+}
+
+\ExplSyntaxOff
+
+% phonenumbers – Typesetting telephone numbers with LaTeX.
+\RequirePackage{phonenumbers}
+
+% Configures phonenumbers package.
+\setphonenumbers{
+    foreign,%
+    foreign-area-code-sep={space},%
+}
+
+\ExplSyntaxOn
+
+% Links to phone numbers.
+\cs_new_protected:Npn \hpx_telref:n #1
+{
+    \href{tel:#1}{\phonenumber{#1}}
+}
+
+% Links to phone numbers – user-level command.
+\NewDocumentCommand{\hpxTelRef}{m}
+{ \hpx_telref:n {#1} }
+
+\ExplSyntaxOff
+

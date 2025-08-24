@@ -1,0 +1,212 @@
+% ---
+% description: Initialisation
+% ---
+
+% ---
+
+% Engine Check — LuaLaTeX required
+
+% iftex – Am I running under pdfTeX, XeTeX or LuaTeX?
+\RequirePackage{iftex}
+
+% Aborts if engine is not LuaLaTeX.
+\ifLuaTeX
+    % The desired case; nothing to do.
+\else
+    \ClassError{hpx}{%
+        This class requires LuaLaTeX for Unicode and OpenType support.%
+    }{%
+        Please specify LuaLaTeX as compilation engine.%
+    }
+\fi
+
+% ---
+
+% Document Information
+
+\ExplSyntaxOn
+
+% Creates a global property list to hold document information.
+\prop_new:N \g_hpx_doc_info_prop
+
+% Defines keys.
+% TODO Add handling for unknown keys.
+\keys_define:nn { hpx/doc-info } {
+    title     .code:n    = { \prop_put:Nnn \g_hpx_doc_info_prop { title } {#1} },
+    title     .initial:n = { <Title> },
+
+    subject   .code:n    = { \prop_put:Nnn \g_hpx_doc_info_prop { subject } {#1} },
+    subject   .initial:n = { <Subject> },
+
+    company   .code:n    = { \prop_put:Nnn \g_hpx_doc_info_prop { company } {#1} },
+    company   .initial:n = { <Company> },
+
+    applicant .code:n    = { \prop_put:Nnn \g_hpx_doc_info_prop { applicant } {#1} },
+    applicant .initial:n = { <Applicant> },
+
+    location       .code:n    = { \prop_put:Nnn \g_hpx_doc_info_prop { location } {#1} },
+    location       .initial:n = { <Location> },
+
+    locationref       .code:n    = { \prop_put:Nnn \g_hpx_doc_info_prop { locationref } {#1} },
+    locationref       .initial:n = { <Locationref> },
+
+    mail      .code:n    = { \prop_put:Nnn \g_hpx_doc_info_prop { mail } {#1} },
+    mail      .initial:n = { <Mail> },
+
+    github    .code:n    = { \prop_put:Nnn \g_hpx_doc_info_prop { github } {#1} },
+    github    .initial:n = { <Github> },
+
+    linkedin  .code:n    = { \prop_put:Nnn \g_hpx_doc_info_prop { linkedin } {#1} },
+    linkedin  .initial:n = { <Linkedin> },
+
+    pgp       .code:n    = { \prop_put:Nnn \g_hpx_doc_info_prop { pgp } {#1} },
+    pgp       .initial:n = { <Pgp> },
+
+    pgpref       .code:n    = { \prop_put:Nnn \g_hpx_doc_info_prop { pgpref } {#1} },
+    pgpref       .initial:n = { <Pgpref> },
+
+    web       .code:n    = { \prop_put:Nnn \g_hpx_doc_info_prop { web } {#1} },
+    web       .initial:n = { <Web> },
+
+    phone     .code:n    = { \prop_put:Nnn \g_hpx_doc_info_prop { phone } {#1} },
+    phone     .initial:n = { <Phone> },
+
+    role      .code:n    = { \prop_put:Nnn \g_hpx_doc_info_prop { role } {#1} },
+    role      .initial:n = { <Role> },
+
+    atlocation  .code:n    = { \prop_put:Nnn \g_hpx_doc_info_prop { atlocation } {#1} },
+    atlocation  .initial:n = { <@Location> },
+
+    atdate      .code:n    = { \prop_put:Nnn \g_hpx_doc_info_prop { atdate } {#1} },
+    atdate      .initial:n = { <@Date> },
+
+    keywords  .code:n    = { \prop_put:Nnn \g_hpx_doc_info_prop { keywords } {#1} },
+    keywords  .initial:n = { <Keywords> },
+
+    portrait  .code:n    = { \prop_put:Nnn \g_hpx_doc_info_prop { portrait } {#1} },
+    portrait  .initial:n = { <Portrait> },
+}
+
+% Sets multiple keys at once.
+\cs_new_protected:Npn \__hpx_doc_info_set_keys:n  #1 {
+    \keys_set:nn { hpx/doc-info } { #1 }
+}
+
+% Retrieves the value for a single key.
+\cs_new:Npn \__hpx_doc_info_get_key:n #1 {
+    \prop_get:NnN \g_hpx_doc_info_prop {#1} \l_tmpa_tl
+    \tl_use:N \l_tmpa_tl
+}
+
+% An end user macro for setting and getting document information.
+\NewDocumentCommand \hpxDocInfo { o m } {
+    \IfNoValueTF {#1}
+    { \__hpx_doc_info_set_keys:n {#2} }
+    { \__hpx_doc_info_get_key:n {#1} }
+}
+
+\AtBeginDocument{
+    \clist_new:N \l__hpx_info_keys_clist
+    \clist_set:Nn \l__hpx_info_keys_clist
+    {
+        title,applicant,subject,keywords,role,location,locationref,
+        mail,github,linkedin,phone,pgp,pgpref,atdate,atlocation,portrait,
+    }
+    \clist_map_inline:Nn \l__hpx_info_keys_clist
+    {
+        \prop_get:NnN \g_hpx_doc_info_prop { #1 } \l_tmpa_tl
+        \tl_set:cx { g__hpxdi_#1_tl } { \tl_to_str:N \l_tmpa_tl }
+        \tl_set:Nx \l_tmpb_tl { \tl_upper_case:n { \tl_head:n {#1} } \tl_tail:n {#1} }
+        \tl_set:cx { hpxdi\l_tmpb_tl } { \tl_to_str:N \l_tmpa_tl }
+    }
+}
+
+\ExplSyntaxOff
+
+% ---
+
+% Style Options
+
+\ExplSyntaxOn
+
+% Creates a global property list to hold style information.
+\prop_new:N \g_hpx_doc_style_prop
+
+% Defines keys.
+% TODO Add handling for unknown keys.
+\keys_define:nn { hpx/doc-style }{
+    % Colo(u)rs
+    layerbgcolor     .code:n    = { \prop_put:Nnn \g_hpx_doc_style_prop { layerbgcolor } {#1} },
+    layerbgcolor     .initial:n = { gray },
+    layerfgcolor     .code:n    = { \prop_put:Nnn \g_hpx_doc_style_prop { layerfgcolor } {#1} },
+    layerfgcolor     .initial:n = { white },
+    linkcolor     .code:n    = { \prop_put:Nnn \g_hpx_doc_style_prop { linkcolor } {#1} },
+    linkcolor     .initial:n = { magenta },
+
+    % Margins
+    topmargin     .code:n    = { \prop_put:Nnn \g_hpx_doc_style_prop { topmargin } {#1} },
+    topmargin     .initial:n = { 5.5cm },
+    bottommargin     .code:n    = { \prop_put:Nnn \g_hpx_doc_style_prop { bottommargin } {#1} },
+    bottommargin     .initial:n = { 2.5cm },
+    sidemargin     .code:n    = { \prop_put:Nnn \g_hpx_doc_style_prop { sidemargin } {#1} },
+    sidemargin     .initial:n = { 2cm },
+    sidemargincv     .code:n    = { \prop_put:Nnn \g_hpx_doc_style_prop { sidemargincv } {#1} },
+    sidemargincv     .initial:n = { 1.5cm },
+
+    % Shifts
+    yshiftathead     .code:n    = { \prop_put:Nnn \g_hpx_doc_style_prop { yshiftathead } {#1} },
+    yshiftathead     .initial:n = { 1cm },
+    yshiftatfoot     .code:n    = { \prop_put:Nnn \g_hpx_doc_style_prop { yshiftatfoot } {#1} },
+    yshiftatfoot     .initial:n = { -1cm },
+}
+
+% Sets multiple keys at once.
+\cs_new_protected:Npn \__hpx_doc_style_set_keys:n  #1 {
+    \keys_set:nn { hpx/doc-style } { #1 }
+}
+
+% Retrieves the value for a single key.
+\cs_new:Npn \__hpx_doc_style_get_key:n #1 {
+    \prop_get:NnN \g_hpx_doc_style_prop {#1} \l_tmpa_tl
+    \tl_use:N \l_tmpa_tl
+}
+
+% An end user macro for setting and getting document information.
+\NewDocumentCommand \hpxDocStyle { o m } {
+    \IfNoValueTF {#1}
+    { \__hpx_doc_style_set_keys:n {#2} }
+    { \__hpx_doc_style_get_key:n {#1} }
+}
+
+% Parses class options.
+\ProcessKeyOptions[hpx/doc-style]
+
+\clist_new:N \l__hpx_doc_style_keys_clist
+\clist_set:Nn \l__hpx_doc_style_keys_clist {
+    % Colo(u)rs
+    layerbgcolor,layerfgcolor,linkcolor,
+    % Margins
+    topmargin,bottommargin,sidemargin,sidemargincv,
+    % Shifts
+    yshiftathead,yshiftatfoot,
+}
+\clist_map_inline:Nn \l__hpx_doc_style_keys_clist {
+    \prop_get:NnN \g_hpx_doc_style_prop { #1 } \l_tmpa_tl
+    \tl_set:cx { g__hpxds_#1_tl } { \tl_to_str:N \l_tmpa_tl }
+    \tl_set:Nx \l_tmpb_tl { \tl_upper_case:n { \tl_head:n {#1} } \tl_tail:n {#1} }
+    \tl_set:cx { hpxds\l_tmpb_tl } { \tl_to_str:N \l_tmpa_tl }
+}
+
+\AtBeginDocument{
+    % TODO Consider converting "length macros" to true lengths 
+    % to avoid such clunky piece of code
+    \newlength{\hpxdsSidemarginTmp}
+    \setlength{\hpxdsSidemarginTmp}{\hpxdsSidemargin}
+    \newlength{\hpxdsTextwidth}
+    \setlength{\hpxdsTextwidth}{%
+        \dimexpr \paperwidth - 2\hpxdsSidemarginTmp \relax
+    }
+}
+
+\ExplSyntaxOff
+

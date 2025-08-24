@@ -1,0 +1,126 @@
+% ---
+% description: Cover Letter Environment
+% ---
+
+% ---
+
+% % Only for debugging purposes.
+% \LoadLetterOption{visualize}
+% \showfields{%
+%     test,%
+%     head,%
+%     foot,%
+%     address,%
+%     location,%
+%     refline,%
+% }
+
+\ExplSyntaxOn
+
+\KOMAoptions{
+    addrfield=topaligned,%
+    foldmarks=false,%
+    backaddress=false,%
+    refline=nodate,%
+    % No special treatment for the first page.
+    firsthead=false,% 
+    firstfoot=false,%
+}
+
+% Font for subject of letter
+\addtokomafont{addressee}{\centering\normalfont\scshape\small}
+\addtokomafont{lettersubject}{\centering\normalfont\bfseries\scshape\Large}
+
+\cs_new_protected:Npn \hpx_letter_begin_setup: {
+    \dim_new:N \l_hpx_actual_tmargin_dim
+    \dim_new:N \l_hpx_actual_hmargin_dim
+    % NOTE: TeX defines \topmargin/\oddsidemargin as the distance from
+    % 1 inch inside the physical page to the top/left edge of the page.
+    % ENIGMA: Why do these lines not provide the correct values?
+    % \dim_set:Nn \l_hpx_actual_tmargin_dim { \dim_eval:n { \topmargin + 1in } }
+    % \dim_set:Nn \l_hpx_actual_hmargin_dim { \dim_eval:n { \oddsidemargin + 1in } }
+    \dim_set:Nn \l_hpx_actual_tmargin_dim { \tl_use:N \g__hpxds_topmargin_tl }
+    \dim_set:Nn \l_hpx_actual_hmargin_dim { \tl_use:N \g__hpxds_sidemargin_tl }
+
+    % The height of the return address at the upper edge of the address field.
+    % NOTE Setting this length to zero is necessary to place the receiver at the
+    % very top of the text area rectangle.
+    \setplength{backaddrheight}{0pt}
+
+    % The vertical distance of the address field from the the top edge 
+    % of the paper.
+    \setplength{toaddrvpos}{\tl_use:N \g__hpxds_topmargin_tl}
+
+    % The horizontal distance of the address field from left edge
+    % of the paper, if the value is positive; if it is negative,
+    % the negative horizontal distance of the address field from
+    % the right edge of the paper.
+    \setplength{toaddrhpos}{\tl_use:N \g__hpxds_sidemargin_tl}
+
+    % The width of the address field.
+    \setplength{toaddrwidth}{\textwidth}
+
+    % % The height of the address field.
+    % \setplength{toaddrheight}{0pt}
+
+    % The horizontal distance of reference-field line from the left edge 
+    % of the paper; if the value is 0, the reference-field line is centred 
+    % horizontally on the letterhead page. 
+    \setplength{refhpos}{\tl_use:N \g__hpxds_sidemargin_tl}
+
+    % The vertical distance of reference-field line from the top edge of the paper.
+    % \setplength{refvpos}{\tl_use:N \g__hpxds_topmargin_tl}
+    \setplength{refvpos}{\dim_eval:n { \tl_use:N \g__hpxds_topmargin_tl + 8ex }}
+
+    % % Vertical skip below reference-field line.
+    % \setplength{refaftervskip}{0ex}
+
+    % The width of the reference-field line.
+    \setplength{refwidth}{\textwidth}
+
+    % Additional vertical skip before the subject.
+    \setplength{subjectbeforevskip}{0ex}
+
+    % The vertical skip after the subject.
+    \setplength{subjectaftervskip}{8ex}
+
+    % % The vertical distance of the subject from the top edge
+    % % of the paper; if it is 0, the position is calculated based
+    % % on the subject option.
+    % \setplength{subjectvpos}{\l_hpx_actual_tmargin_dim}
+}
+
+% Letter Environment
+\NewDocumentEnvironment{hpxlttr}{O{}}
+{
+    \hpx_letter_begin_setup:
+
+    \tl_set:Nn \l_hpxlttr_recipient_tl {#1}
+
+    \clearpage
+    \begin{letter}{\l_hpxlttr_recipient_tl}
+        % Clears any previous header/footer layers.
+        \clearpairofpagestyles
+        % Sets pagestyle for the subsequent pages –
+        % not the first, see \opening patch below.
+        \pagestyle{hpxdefault}
+        % Adds pdf bookmark.
+        \pdfbookmark[0]{Letter}{coverletter}
+        }
+        {
+    \end{letter}
+    \newpage
+}
+
+% Pagestyle Patch for \opening
+\cs_new_eq:NN \hpx_original_opening \opening
+\cs_set_protected:Npn \opening #1
+{
+    \hpx_original_opening {#1}
+    \thispagestyle{hpxdefault}
+}
+
+% Removal of \closing Indentation
+\cs_set:Npn \raggedsignature {\raggedright}
+
+\ExplSyntaxOff
