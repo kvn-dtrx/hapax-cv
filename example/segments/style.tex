@@ -86,10 +86,12 @@
     \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}m{1.5cm}X@{}}
         % Dates
         \begin{tabular}[t]{@{}c@{}}
-            \tl_use:N \l__dateentry_from_tl \cs_if_eq:NNF \l__dateentry_to_tl \c_empty_tl
-            { \\[-0.2ex]
+            \tl_use:N \l__dateentry_to_tl% 
+            \cs_if_eq:NNF \l__dateentry_from_tl \c_empty_tl {%
+            \\[-0.2ex]
             • \\[-0.2ex]
-                \tl_use:N \l__dateentry_to_tl}
+                \tl_use:N \l__dateentry_from_tl%
+            }
         \end{tabular}
          &
         % Title + Institution + Description

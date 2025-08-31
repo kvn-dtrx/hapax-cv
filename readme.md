@@ -6,13 +6,17 @@ This repository contains a CV (plus cover letter) template composed in LaTeX. It
 
 Beyond its practical necessity, the creation of this template served chiefly the author as an opportunity to renew his acquaintance with writing LaTeX packages and classes—remaining true to his office suite software aversion.[^not-perfect]
 
-[^not-perfect] Nevertheless—and this may appear heretical (have mercy upon me!)—LaTeX is *not* the perfect instrument for the composition of CVs.
+[^not-perfect]: Nevertheless—and this may appear heretical (have mercy upon me!)—LaTeX is *not* the perfect instrument for the composition of CVs.
 
 ### Nomen est … nomen
 
 A *hapax legomenon (ἅπαξ λεγόμενον)* denotes a word or term occurring only once within a given corpus of texts; compare with [this dictionary article](https://dictionary.cambridge.org/dictionary/english/hapax-legomenon).
 
 If we believe those who claim to know how a CV ought to appear, writing a CV should aim at maximising the number of pertinent keywords for CV parsing software, subject to the restriction of retaining a human-friendly appearance.
+
+## Template Preview
+
+Precompiled PDF versions of this template are provided in the **[Releases](https://github.com/kvn-dtrx/hapax-cv/releases)** section for your convenience. Alternatively, after downloading the repository (see below), you may navigate to the `examples/` subdirectory and run `latexmk`.
 
 ## Installation
 
