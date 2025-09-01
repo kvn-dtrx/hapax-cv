@@ -1,0 +1,7 @@
+project:
+  name: Hapax CV
+  description: A LaTeX Template for CVs
+  github: https://github.com/kvn-dtrx/hapax-cv
+  authors:
+    - name: Kvn Dtrx
+      mail: kvn.dtrx+git@protonmail.ch
