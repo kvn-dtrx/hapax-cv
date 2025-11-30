@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 
-% ENIGMA Using \ProvidesExplClass instead of \ProvideClass leads to blank space
+% ENIGMA: Using \ProvidesExplClass instead of \ProvideClass leads to blank space
 % swallowing in \ClassError.
 % \ProvidesExplClass
 % {hapax-cv}

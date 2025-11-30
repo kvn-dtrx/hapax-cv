@@ -30,7 +30,7 @@
 \prop_new:N \g_hpx_doc_info_prop
 
 % Defines keys.
-% TODO Add handling for unknown keys.
+% TODO: Add handling for unknown keys.
 \keys_define:nn { hpx/doc-info } {
     title .code:n = { \prop_put:Nnn \g_hpx_doc_info_prop { title } {#1} },
     title .initial:n = { <Title> },
@@ -133,7 +133,7 @@
 \prop_new:N \g_hpx_doc_style_prop
 
 % Defines keys.
-% TODO Add handling for unknown keys.
+% TODO: Add handling for unknown keys.
 \keys_define:nn { hpx/doc-style }{
     % Colo(u)rs
     layerbgcolor .code:n = { \prop_put:Nnn \g_hpx_doc_style_prop { layerbgcolor } {#1} },
@@ -198,7 +198,7 @@
 }
 
 \AtBeginDocument{
-    % TODO Consider converting "length macros" to true lengths
+    % TODO: Consider converting "length macros" to true lengths
     % to avoid such clunky piece of code
     \newlength{\hpxdsSidemarginTmp}
     \setlength{\hpxdsSidemarginTmp}{\hpxdsSidemargin}
