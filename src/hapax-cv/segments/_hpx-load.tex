@@ -6,9 +6,9 @@
 
 % Loads skeleton with options.
 \LoadClass[%
-    parskip={half},%
-    fontsize={11pt},%
-    % visualise,%
+  parskip={half},%
+  fontsize={11pt},%
+  % visualise,%
 ]{scrartcl}
 
 % scrletter – Letter extension to KOMA-Script classes.
@@ -25,16 +25,16 @@
 
 % Font features.
 \defaultfontfeatures{
-    % Enables classic TeX-style ligatures:
-    % - `fi', `fl' etc. with ligature.
-    % - `...` to …, `--` to `–` etc.
-    Ligatures=TeX,%
-    % Use old-style (text) digits with varying heights.
-    Numbers=OldStyle,%
-    % NOTE: Does not work for Libertinus
-    % % Enables contextual alternate glyphs such
-    % % as the trailing sigma in Ancient Greek.
-    % Contextuals=All,%
+  % Enables classic TeX-style ligatures:
+  % - `fi', `fl' etc. with ligature.
+  % - `...` to …, `--` to `–` etc.
+  Ligatures=TeX,%
+  % Use old-style (text) digits with varying heights.
+  Numbers=OldStyle,%
+  % NOTE: Does not work for Libertinus
+  % % Enables contextual alternate glyphs such
+  % % as the trailing sigma in Ancient Greek.
+  % Contextuals=All,%
 }
 
 % Sets default fonts.
@@ -49,16 +49,16 @@
 \RequirePackage{microtype}
 
 \microtypesetup{
-    protrusion=true,%
-    expansion=true,%
-    tracking=true,%
-    % kerning=true,%
-    final,%
-    % Enable features without backward-compatibility restrictions
-    activate={%
-            true,%
-            nocompatibility,%
-        },%
+  protrusion=true,%
+  expansion=true,%
+  tracking=true,%
+  % kerning=true,%
+  final,%
+  % Enable features without backward-compatibility restrictions
+  activate={%
+      true,%
+      nocompatibility,%
+    },%
 }
 
 % % polyglossia – An alternative to babel for XeLaTeX and LuaLaTeX.
@@ -72,9 +72,9 @@
 
 \ExplSyntaxOn
 \AtBeginDocument{%
-    \colorlet{layerbgcolor}{\g__hpxds_layerbgcolor_tl}
-    \colorlet{layerfgcolor}{\g__hpxds_layerfgcolor_tl}
-    \colorlet{linkcolor}{\g__hpxds_linkcolor_tl}
+  \colorlet{layerbgcolor}{\g__hpxds_layerbgcolor_tl}
+  \colorlet{layerfgcolor}{\g__hpxds_layerfgcolor_tl}
+  \colorlet{linkcolor}{\g__hpxds_linkcolor_tl}
 }
 \ExplSyntaxOff
 
@@ -99,44 +99,44 @@
 \ExplSyntaxOn
 
 \AtBeginDocument{%
-    \hypersetup{
-        linktoc={all},%
-        colorlinks={true},%
-        linkcolor={linkcolor},%
-        citecolor={linkcolor},%
-        urlcolor={linkcolor},%
-        % anchorcolor={linkcolor},%
-        pdfstartview={Fit},%
-        % Whether to display the toolbar in Acrobat Reader.
-        pdftoolbar={false},
-        % Whether to display the menubar in Acrobat Reader.
-        pdfmenubar={true},
-        pdfpagemode={UseOutlines},%
-        pdfproducer={LuaLaTeX},%
-        % pdfcreator={LuaLaTeX},%
-        pdfpagelayout={OneColumn},%
-        % pageanchor={false},%
-        % Whether to number bookmarks.
-        bookmarksnumbered={false},
-        bookmarksopen={true},%
-    }
+  \hypersetup{
+    linktoc={all},%
+    colorlinks={true},%
+    linkcolor={linkcolor},%
+    citecolor={linkcolor},%
+    urlcolor={linkcolor},%
+    % anchorcolor={linkcolor},%
+    pdfstartview={Fit},%
+    % Whether to display the toolbar in Acrobat Reader.
+    pdftoolbar={false},
+    % Whether to display the menubar in Acrobat Reader.
+    pdfmenubar={true},
+    pdfpagemode={UseOutlines},%
+    pdfproducer={LuaLaTeX},%
+    % pdfcreator={LuaLaTeX},%
+    pdfpagelayout={OneColumn},%
+    % pageanchor={false},%
+    % Whether to number bookmarks.
+    bookmarksnumbered={false},
+    bookmarksopen={true},%
+  }
 }
 
 \AtBeginDocument{
-    \hypersetup
-    {
-        pdfinfo =
-            {
-                Title = {\tl_use:N \g__hpxdi_title_tl},%
-                Author = {\tl_use:N \g__hpxdi_applicant_tl},%
-                Subject = {\tl_use:N \g__hpxdi_subject_tl},%
-                Keywords = {\tl_use:N \g__hpxdi_keywords_tl},%
-                % CreationDate = { \tl_use:N \l__hpx_creation_date_tl },%
-                % % CreationDate = {D:1970010112000},%
-                % ModDate = { \tl_use:N \l__hpx_mod_date_tl },%
-                % % ModDate = {D:1970010112000},%
-            }
-    }
+  \hypersetup
+  {
+    pdfinfo =
+      {
+        Title = {\tl_use:N \g__hpxdi_title_tl},%
+        Author = {\tl_use:N \g__hpxdi_applicant_tl},%
+        Subject = {\tl_use:N \g__hpxdi_subject_tl},%
+        Keywords = {\tl_use:N \g__hpxdi_keywords_tl},%
+        % CreationDate = { \tl_use:N \l__hpx_creation_date_tl },%
+        % % CreationDate = {D:1970010112000},%
+        % ModDate = { \tl_use:N \l__hpx_mod_date_tl },%
+        % % ModDate = {D:1970010112000},%
+      }
+  }
 }
 
 \ExplSyntaxOff
@@ -146,8 +146,8 @@
 
 % Configures phonenumbers package.
 \setphonenumbers{
-    foreign,%
-    foreign-area-code-sep={space},%
+  foreign,%
+  foreign-area-code-sep={space},%
 }
 
 \ExplSyntaxOn
@@ -155,7 +155,7 @@
 % Links to phone numbers.
 \cs_new_protected:Npn \hpx_telref:n #1
 {
-    \href{tel:#1}{\phonenumber{#1}}
+  \href{tel:#1}{\phonenumber{#1}}
 }
 
 % Links to phone numbers – user-level command.

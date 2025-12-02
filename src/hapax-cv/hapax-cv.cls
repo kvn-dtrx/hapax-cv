@@ -9,7 +9,7 @@
 % {A LaTeX Class for CVs}
 
 \ProvidesClass{hapax-cv}[%
-    2025/08/16 v0.0-dev A LaTeX Class for CVs%
+  2025/08/16 v0.0-dev A LaTeX Class for CVs%
 ]
 
 % ---
