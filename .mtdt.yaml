@@ -1,7 +1,13 @@
 project:
+  id: 960d6540-e8d8-42de-aead-55bdad4e0cbd
   name: Hapax CV
-  description: A LaTeX Template for CVs
-  github: https://github.com/kvn-dtrx/hapax-cv
+  description: >-
+    A LaTeX Template for CVs
   authors:
     - name: Kvn Dtrx
       mail: kvn.dtrx+git@protonmail.ch
+  license: null
+forges:
+  github:
+    url: https://github.com/kvn-dtrx/hapax-cv
+    visibility: public
