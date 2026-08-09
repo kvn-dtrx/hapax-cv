@@ -6,8 +6,10 @@
 
 # ---
 
+# Make targets follow paradigmata (install = TEXMF deploy).
+
 XDG_DATA_HOME ?= $(HOME)/.local/share
-WIRE := $(CURDIR)/bin/make-wire.bash
+WIRE := $(XDG_DATA_HOME)/dia/resources/wire/make-wire.bash
 
 .PHONY: help install cp ln rm
 
@@ -30,4 +32,3 @@ rm: ## Remove installed packages named like src/wire/*/ from TEXMF
 	done
 
 # dia:end
-
