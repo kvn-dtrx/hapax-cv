@@ -1,0 +1,26 @@
+stages:
+  - build
+  - release
+build-examples:
+  stage: build
+  image: texlive/texlive:TL2025-historic
+  script:
+    - bin/compile-examples.sh
+  artifacts:
+    name: "examples-${CI_COMMIT_REF_SLUG}"
+    paths:
+      - build/*.pdf
+    expire_in: 1 week
+release-examples:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/cli:latest
+  needs:
+    - job: build-examples
+      artifacts: true
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v/'
+  variables:
+    GLAB_ENABLE_CI_AUTOLOGIN: "true"
+  script:
+    - >-
+      glab release create "${CI_COMMIT_TAG}" --name "Template ${CI_COMMIT_TAG}" --notes "Automatically built LaTeX example PDFs." --use-package-registry build/*.pdf

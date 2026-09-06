@@ -16,7 +16,11 @@ If we believe those who claim to know how a CV ought to appear, writing a CV sho
 
 ## Template Preview
 
-Precompiled PDF versions of this template are provided in the **[Releases](https://github.com/kvn-dtrx/hapax-cv/releases)** section for your convenience. Alternatively, after downloading the repository (see below), you may navigate to the `examples/` subdirectory and run `latexmk`.
+Version tags build and publish the example automatically. Compiled PDF
+previews are available from [GitHub Releases](https://github.com/kvn-dtrx/hapax-cv/releases)
+and [GitLab Releases](https://gitlab.com/kvn-dtrx/hapax-cv/-/releases).
+Alternatively, after downloading the repository, one may run `just build` at
+its root.
 
 ## Installation
 
@@ -51,4 +55,4 @@ As this subdirectory already provides a `.latexmkrc` file, the command `latexmk`
 
 **Author:** [kvn-dtrx](https://github.com/kvn-dtrx)
 
-**License:** [MIT License](license.txt)
+**License:** [MIT License](LICENSE.txt)
