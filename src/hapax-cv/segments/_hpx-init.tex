@@ -4,21 +4,14 @@
 
 % ---
 
+% ChkTeX misreads required spaces in expl3 key definitions as punctuation errors
+% chktex-file 26
+
 % Engine Check — LuaLaTeX required
 
-% iftex – Am I running under pdfTeX, XeTeX or LuaTeX?
+% iftex – Require LuaLaTeX for Unicode and OpenType support.
 \RequirePackage{iftex}
-
-% Aborts if engine is not LuaLaTeX.
-\ifLuaTeX
-    % The desired case; nothing to do.
-\else
-    \ClassError{hpx}{%
-        This class requires LuaLaTeX for Unicode and OpenType support.%
-    }{%
-        Please specify LuaLaTeX as compilation engine.%
-    }
-\fi
+\RequireLuaTeX
 
 % ---
 
